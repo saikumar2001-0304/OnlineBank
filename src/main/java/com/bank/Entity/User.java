@@ -3,7 +3,7 @@ package com.bank.Entity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class UserEntity {
+public class User {
 
 	private Long userId;
 	private String userName;
