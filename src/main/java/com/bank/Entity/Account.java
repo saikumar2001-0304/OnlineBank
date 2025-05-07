@@ -30,6 +30,63 @@ public class Account {
 	@CreationTimestamp
 	@Column(name = "CREATED_TIME",updatable = false)
 	private LocalDateTime createdTime;
+	public Long getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public BigDecimal getBalance() {
+		return balance;
+	}
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+	public AccountType getAcType() {
+		return acType;
+	}
+	public void setAcType(AccountType acType) {
+		this.acType = acType;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public LocalDateTime getCreatedTime() {
+		return createdTime;
+	}
+	public void setCreatedTime(LocalDateTime createdTime) {
+		this.createdTime = createdTime;
+	}
+	public Account(Long accountId, User user, String accountNumber, BigDecimal balance, AccountType acType,
+			String status, LocalDateTime createdTime) {
+		super();
+		this.accountId = accountId;
+		this.user = user;
+		this.accountNumber = accountNumber;
+		this.balance = balance;
+		this.acType = acType;
+		this.status = status;
+		this.createdTime = createdTime;
+	}
+	public Account() {
+		super();
+	}	
+	
 	
 	/*ield Name	Type	Description
 	id	Long	Primary Key
