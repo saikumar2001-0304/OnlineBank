@@ -1,10 +1,13 @@
 package com.bank.Entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class User {
 
+	
+	@Id
 	private Long userId;
 	private String userName;
 	private String password;
