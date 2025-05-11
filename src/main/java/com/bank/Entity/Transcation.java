@@ -3,8 +3,11 @@ package com.bank.Entity;
 import java.time.LocalDateTime;
 import java.util.Date;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -15,8 +18,9 @@ public class Transcation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
-	private Account fromAccount;
-	
+//	private Account fromAccount;			
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "account_Id")
 	private Account toAccount;
 	private String type;
 	private LocalDateTime timestamp;
@@ -30,7 +34,7 @@ public class Transcation {
 			String description) {
 		super();
 		Id = id;
-		this.fromAccount = fromAccount;
+//		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.type = type;
 		this.timestamp = timestamp;
@@ -45,13 +49,13 @@ public class Transcation {
 		Id = id;
 	}
 
-	public Account getFromAccount() {
-		return fromAccount;
-	}
-
-	public void setFromAccount(Account fromAccount) {
-		this.fromAccount = fromAccount;
-	}
+//	public Account getFromAccount() {
+//		return fromAccount;
+//	}
+//
+//	public void setFromAccount(Account fromAccount) {
+//		this.fromAccount = fromAccount;
+//	}
 
 	public Account getToAccount() {
 		return toAccount;

@@ -4,10 +4,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -17,11 +24,17 @@ public class Loan {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_Id")
 	private User user;
 	private BigDecimal amount;
 	private int tenure;
 	private String staus;
+	@CreationTimestamp
+	@Column(name = "CREATED_TIME",updatable = false)
 	private LocalDateTime createdAt;
+	@UpdateTimestamp
+	@Column(name = "APPROVED_TIME",insertable = false)
 	private LocalDateTime approvedAt;
 
 	public Loan() {
