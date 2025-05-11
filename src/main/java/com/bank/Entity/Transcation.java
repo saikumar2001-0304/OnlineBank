@@ -1,24 +1,32 @@
 package com.bank.Entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
 public class Transcation {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
+	
 	private Account fromAccount;
+	
 	private Account toAccount;
 	private String type;
-	private Date timestamp;
+	private LocalDateTime timestamp;
 	private String description;
 
 	public Transcation() {
 		super();
 	}
 
-	public Transcation(Long id, Account fromAccount, Account toAccount, String type, Date timestamp,
+	public Transcation(Long id, Account fromAccount, Account toAccount, String type, LocalDateTime timestamp,
 			String description) {
 		super();
 		Id = id;
@@ -61,11 +69,11 @@ public class Transcation {
 		this.type = type;
 	}
 
-	public Date getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 

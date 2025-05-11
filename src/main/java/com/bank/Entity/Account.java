@@ -1,5 +1,6 @@
 package com.bank.Entity;
 
+//<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -9,18 +10,27 @@ import com.bank.enums.AccountType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 @Entity
 public class Account {
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_Id")
 	private User user;
 //	@Pattern(regexp = "regexp = \"^[1-9]\\\\d{8,17}$\", message = \"Account number must be 9 to 18 digits and not start with 0\"")
 	private String accountNumber;
