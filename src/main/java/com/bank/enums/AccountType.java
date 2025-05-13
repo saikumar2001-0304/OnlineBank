@@ -2,5 +2,5 @@ package com.bank.enums;
 
 public enum AccountType {
 
-	SAVINGS, CURRENT, OTHETS
+	SAVINGS, CURRENT, OTHERS
 }
