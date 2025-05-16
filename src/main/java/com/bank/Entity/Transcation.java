@@ -30,7 +30,7 @@ public class Transcation {
 		super();
 	}
 
-	public Transcation(Long id, Account fromAccount, Account toAccount, String type, LocalDateTime timestamp,
+	public Transcation(Long id, Account toAccount, String type, LocalDateTime timestamp,
 			String description) {
 		super();
 		Id = id;
