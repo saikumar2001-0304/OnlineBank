@@ -49,12 +49,13 @@ public class UserServiceImpl implements UserService{
 		User byEmail = usrepo.findByEmail(email);
 		if(byEmail.getEmail()==email) {
 			
+			throw new UserException(" given email was not found");
+		}else {
 			byEmail.setPassword(user.getPassword());
 			byEmail.setPhoneNumber(user.getPhoneNumber());
 			User save = usrepo.save(byEmail);
 			return save;
-		}else {
-			throw new UserException(" given email was not found");
+			
 		}
 	}
 

@@ -18,6 +18,11 @@ public class GlobalExcetion {
 	{
 		return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
 	}
+	@ExceptionHandler(value=AccountExce.class)
+	public ResponseEntity<String> handleIllegalArgumentException(AccountExce acc)
+	{
+		return new ResponseEntity<String>(acc.getMessage(),HttpStatus.NOT_FOUND);
+	}
 	
 	@ExceptionHandler(value=MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleInvalidException(MethodArgumentNotValidException ex)
