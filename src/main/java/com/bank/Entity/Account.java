@@ -32,8 +32,8 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountId;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_Id")
+	
+	@ManyToOne
 	private User user;
 //	@Pattern(regexp = "regexp = \"^[1-9]\\\\d{8,17}$\", message = \"Account number must be 9 to 18 digits and not start with 0\"")
 	private String accountNumber;
