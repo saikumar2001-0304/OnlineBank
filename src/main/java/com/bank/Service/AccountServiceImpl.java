@@ -2,6 +2,7 @@ package com.bank.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import com.bank.Exception.AccountExce;
 import com.bank.Repository.AccountRepository;
 import com.bank.enums.AccountType;
 
-
+@Service
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
@@ -63,12 +64,12 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public String addbalance(String accountNo,BigDecimal amount) throws AccountExce {
-		Account account = acRepo.findByAccountNumber(accountNo);
+		Optional<Account> account = acRepo.findByAccountNumber(accountNo);
 		String bal;
-		if(account.getAccountNumber().equals(accountNo)) {
-			BigDecimal balance = account.getBalance();
+		if(account.get().getAccountNumber().equals(accountNo)) {
+			BigDecimal balance = account.get().getBalance();
 			BigDecimal currentBal = balance.add(amount);
-			account.setBalance(currentBal);
+			account.get().setBalance(currentBal);
 			 bal="previous balance was: ->"+balance+"current balance: ->"+currentBal+" thank you";
 			return bal;
 		}else {
@@ -78,12 +79,12 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public String withdrawBalance(String accountNo, BigDecimal amount) throws AccountExce {
-		Account account = acRepo.findByAccountNumber(accountNo);
+		Optional<Account> account = acRepo.findByAccountNumber(accountNo);
 		String bal;
-		if(account.getAccountNumber().equals(accountNo)) {
-			BigDecimal balance = account.getBalance();
+		if(account.get().getAccountNumber().equals(accountNo)) {
+			BigDecimal balance = account.get().getBalance();
 			BigDecimal currentBal = balance.subtract(amount);
-			account.setBalance(currentBal);
+			account.get().setBalance(currentBal);
 			 bal="previous balance was: ->"+balance+"current balance: ->"+currentBal+" thank you";
 			return bal;
 		}else {

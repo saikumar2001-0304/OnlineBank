@@ -12,29 +12,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 @Entity
-public class Transcation {
+public class Transaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
-//	private Account fromAccount;			
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_Id")
+	private Account fromAccount;			
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Account toAccount;
 	private String type;
 	private LocalDateTime timestamp;
 	private String description;
 
-	public Transcation() {
+	public Transaction() {
 		super();
 	}
 
-	public Transcation(Long id, Account toAccount, String type, LocalDateTime timestamp,
+	public Transaction(Long id, Account fromAccount, Account toAccount, String type, LocalDateTime timestamp,
 			String description) {
 		super();
 		Id = id;
-//		this.fromAccount = fromAccount;
+		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.type = type;
 		this.timestamp = timestamp;
@@ -49,13 +49,13 @@ public class Transcation {
 		Id = id;
 	}
 
-//	public Account getFromAccount() {
-//		return fromAccount;
-//	}
-//
-//	public void setFromAccount(Account fromAccount) {
-//		this.fromAccount = fromAccount;
-//	}
+	public Account getFromAccount() {
+		return fromAccount;
+	}
+
+	public void setFromAccount(Account fromAccount) {
+		this.fromAccount = fromAccount;
+	}
 
 	public Account getToAccount() {
 		return toAccount;
