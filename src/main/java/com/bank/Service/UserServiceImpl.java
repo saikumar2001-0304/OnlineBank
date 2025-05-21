@@ -6,33 +6,49 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.Dto.DtoMapper;
+import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
 import com.bank.Exception.UserException;
 import com.bank.Repository.UserRepository;
+import com.bank.enums.UserRole;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository usrepo;
+
+	public UserDto createUser(UserDto request) {
 	
+
+		User user = DtoMapper.toUser(request);
+		user.setRole(UserRole.CUSTOMER);
+		user.setStatus("Active");
+		User savedUser = usrepo.save(user);
+		return DtoMapper.toUserRequest(savedUser);
+		
+		
+
+	}
+
 	@Override
 	public User addUser(User user) throws UserException {
-		if(usrepo.existsByemail(user.getEmail())){
+		if (usrepo.existsByemail(user.getEmail())) {
 			throw new UserException("user email already exist");
-		}else {
+		} else {
 			User userdetails = usrepo.save(user);
 			return userdetails;
 		}
-		
+
 	}
 
 	@Override
 	public User userbyId(Long userId) throws UserException {
 		User userdetails = usrepo.findById(userId).get();
-		if(userdetails.getUserId()==userId) {
+		if (userdetails.getUserId() == userId) {
 			return userdetails;
-		}else {
+		} else {
 			throw new UserException("user id was not found");
 		}
 	}
@@ -45,32 +61,29 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User updateUser(User user, String email) throws UserException {
-		
+
 		User byEmail = usrepo.findByEmail(email);
-		if(byEmail.getEmail()==email) {
-			
+		if (byEmail.getEmail() == email) {
+
 			throw new UserException(" given email was not found");
-		}else {
+		} else {
 			byEmail.setPassword(user.getPassword());
 			byEmail.setPhoneNumber(user.getPhoneNumber());
 			User save = usrepo.save(byEmail);
 			return save;
-			
+
 		}
 	}
-
-
 
 	@Override
 	public String deleteuser(Long userId) throws UserException {
 		User user = usrepo.findById(userId).get();
-		if(user.getUserId()==userId) {
+		if (user.getUserId() == userId) {
 			usrepo.deleteById(userId);
 			return "user deleted successfully";
-		}else {
+		} else {
 			throw new UserException("userid was not found");
 		}
 	}
-
 
 }

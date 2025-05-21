@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
 import com.bank.Exception.UserException;
 import com.bank.Service.UserServiceImpl;
@@ -24,6 +25,17 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl service;
+	
+	
+	@PostMapping("create")
+	public ResponseEntity<UserDto> createUser(UserDto request){
+		
+		return new ResponseEntity<>(service.createUser(request),HttpStatus.CREATED);
+		
+	}
+	
+	
+	
 	@PostMapping("/adduser")
 	public ResponseEntity<User> addUser(@RequestBody User user) throws UserException{
 		User user2 = service.addUser(user);

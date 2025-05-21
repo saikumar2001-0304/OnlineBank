@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.Dto.AccountDto;
 import com.bank.Entity.Account;
 import com.bank.Exception.AccountExce;
+import com.bank.Exception.UserException;
 import com.bank.Service.AccountServiceImpl;
 import com.bank.enums.AccountType;
 
@@ -26,6 +28,14 @@ public class AccountController {
 
 	@Autowired
 	private AccountServiceImpl accService;
+	
+	@PostMapping("/create/{userId}")
+	public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto,@PathVariable Long userId ) {
+		
+		return new ResponseEntity<>(accService.create(accountDto,userId),HttpStatus.CREATED);
+	}
+	
+	
 	
 	@PostMapping("/save")
 	public ResponseEntity<Account> addAccount(@RequestBody Account account,AccountType type) throws AccountExce{
