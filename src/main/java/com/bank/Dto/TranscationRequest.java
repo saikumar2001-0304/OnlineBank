@@ -1,14 +1,14 @@
-package com.bank.Entity;
+package com.bank.Dto;
 
 import java.math.BigDecimal;
 
-public class DepositRequest {
+public class TranscationRequest {
 	
 	String accountNumber;
 	BigDecimal money;
 	
 	
-	public DepositRequest() {
+	public TranscationRequest() {
 		super();
 	}
 	public String getAccountNumber() {

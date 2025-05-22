@@ -18,6 +18,7 @@ import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
 import com.bank.Exception.UserException;
 import com.bank.Service.UserServiceImpl;
+import com.bank.enums.UserRole;
 
 @RestController
 @RequestMapping("/user")
@@ -28,9 +29,9 @@ public class UserController {
 	
 	
 	@PostMapping("create")
-	public ResponseEntity<UserDto> createUser(UserDto request){
+	public ResponseEntity<UserDto> createUser(UserRole role,UserDto request){
 		
-		return new ResponseEntity<>(service.createUser(request),HttpStatus.CREATED);
+		return new ResponseEntity<>(service.createUser(request, role),HttpStatus.CREATED);
 		
 	}
 	

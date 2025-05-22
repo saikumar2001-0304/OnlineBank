@@ -36,6 +36,7 @@ public class Account {
 	@ManyToOne
 	private User user;
 //	@Pattern(regexp = "regexp = \"^[1-9]\\\\d{8,17}$\", message = \"Account number must be 9 to 18 digits and not start with 0\"")
+	@Column(unique=true)
 	private String accountNumber;
 	private BigDecimal balance;
 	@Enumerated(EnumType.STRING)

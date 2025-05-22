@@ -1,5 +1,6 @@
 package com.bank.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import jakarta.persistence.Id;
@@ -25,13 +26,16 @@ public class Transaction {
 	private String type;
 	private LocalDateTime timestamp;
 	private String description;
+	private BigDecimal amount;
 
 	public Transaction() {
 		super();
 	}
 
+	
+
 	public Transaction(Long id, Account fromAccount, Account toAccount, String type, LocalDateTime timestamp,
-			String description) {
+			String description, BigDecimal amount) {
 		super();
 		Id = id;
 		this.fromAccount = fromAccount;
@@ -39,7 +43,10 @@ public class Transaction {
 		this.type = type;
 		this.timestamp = timestamp;
 		this.description = description;
+		this.amount = amount;
 	}
+
+
 
 	public Long getId() {
 		return Id;
@@ -88,5 +95,19 @@ public class Transaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	
+	 
 
 }

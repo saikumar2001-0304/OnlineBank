@@ -18,15 +18,16 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository usrepo;
-
-	public UserDto createUser(UserDto request) {
+	
+	
 	
 
-		User user = DtoMapper.toUser(request);
-		user.setRole(UserRole.CUSTOMER);
-		user.setStatus("Active");
+	public UserDto createUser(UserDto request, UserRole role) {
+	
+
+		User user = DtoMapper.toUser(request,role);
 		User savedUser = usrepo.save(user);
-		return DtoMapper.toUserRequest(savedUser);
+		return DtoMapper.toUserDto(savedUser);
 		
 		
 
@@ -85,5 +86,7 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("userid was not found");
 		}
 	}
+
+	
 
 }

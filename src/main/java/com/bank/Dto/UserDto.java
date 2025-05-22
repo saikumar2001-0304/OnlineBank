@@ -1,5 +1,10 @@
 package com.bank.Dto;
 
+import com.bank.enums.UserRole;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 public class UserDto {
 
 	private Long userId;
@@ -7,18 +12,28 @@ public class UserDto {
 	private String password;
 	private String email;
 	private String phoneNumber;
+	
+	private UserRole role;
+	private String status;
 
 	public UserDto() {
 	}
 
-	public UserDto(Long userId, String userName, String password, String email, String phoneNumber) {
+	
+
+	public UserDto(Long userId, String userName, String password, String email, String phoneNumber, UserRole role,
+			String status) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.role = role;
+		this.status = status;
 	}
+
+
 
 	public Long getUserId() {
 		return userId;
@@ -59,5 +74,31 @@ public class UserDto {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+
+
+	public UserRole getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 
 }
