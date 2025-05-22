@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import com.bank.enums.AccountType;
 
@@ -37,6 +38,8 @@ public class Account {
 	private User user;
 //	@Pattern(regexp = "regexp = \"^[1-9]\\\\d{8,17}$\", message = \"Account number must be 9 to 18 digits and not start with 0\"")
 	@Column(unique=true)
+	@GenericGenerator(name = "account_number_gen",strategy = "com.bank.CustomGenerator.AccountNoGenerator")
+//	@GeneratedValue(generator = "account_number_gen")
 	private String accountNumber;
 	private BigDecimal balance;
 	@Enumerated(EnumType.STRING)

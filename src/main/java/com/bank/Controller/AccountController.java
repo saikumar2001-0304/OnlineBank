@@ -62,14 +62,4 @@ public class AccountController {
 		String deleteAccount = accService.deleteAccount(AccountId);
 		return new ResponseEntity<>(deleteAccount,HttpStatus.OK);
 	}
-	@GetMapping("/addbalnce/{accountNo}")
-	public ResponseEntity<String> addBalance(@PathVariable(name="accountNo") String accountNo,BigDecimal amount) throws AccountExce{
-		String addbalance = accService.addbalance(accountNo, amount);
-		return new ResponseEntity<>(addbalance,HttpStatus.OK);
-	}
-	@GetMapping("/withdraw/{accountNo}")
-	public ResponseEntity<String> withdrawBalance(@PathVariable(name="accountNo") String accountNo,BigDecimal amount) throws AccountExce{
-		String withdrawbalance = accService.withdrawBalance(accountNo, amount);
-		return new ResponseEntity<>(withdrawbalance,HttpStatus.OK);
-	}
 }

@@ -16,8 +16,6 @@ public interface AccountService {
 	List<Account> getAllAccounts();
 	Account getByAccountId(long accountId)throws AccountExce;
 	Account updateAccount()throws AccountExce;
-	String addbalance(String accountNo,BigDecimal amount) throws AccountExce;
-	String withdrawBalance(String accountNo,BigDecimal amount) throws AccountExce;
 	String deleteAccount(long accountId)throws AccountExce;
 	
 }

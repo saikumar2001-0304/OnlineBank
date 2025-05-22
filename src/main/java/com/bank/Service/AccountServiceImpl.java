@@ -83,34 +83,4 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 	}
 
-	@Override
-	public String addbalance(String accountNo, BigDecimal amount) throws AccountExce {
-		Optional<Account> account = acRepo.findByAccountNumber(accountNo);
-		String bal;
-		if (account.get().getAccountNumber().equals(accountNo)) {
-			BigDecimal balance = account.get().getBalance();
-			BigDecimal currentBal = balance.add(amount);
-			account.get().setBalance(currentBal);
-			bal = "previous balance was: ->" + balance + "current balance: ->" + currentBal + " thank you";
-			return bal;
-		} else {
-			throw new AccountExce("account number was not found");
-		}
-	}
-
-	@Override
-	public String withdrawBalance(String accountNo, BigDecimal amount) throws AccountExce {
-		Optional<Account> account = acRepo.findByAccountNumber(accountNo);
-		String bal;
-		if (account.get().getAccountNumber().equals(accountNo)) {
-			BigDecimal balance = account.get().getBalance();
-			BigDecimal currentBal = balance.subtract(amount);
-			account.get().setBalance(currentBal);
-			bal = "previous balance was: ->" + balance + "current balance: ->" + currentBal + " thank you";
-			return bal;
-		} else {
-			throw new AccountExce("account number was not found");
-		}
-	}
-
 }

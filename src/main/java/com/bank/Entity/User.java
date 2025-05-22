@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import com.bank.enums.UserRole;
 
@@ -22,7 +23,8 @@ import jakarta.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "user_id_gen",strategy = "com.bank.CustomGenerator.UserCutomerGenerator")
+//	@GeneratedValue(generator = "user_id_gen")
 	@Column(name = "USER_ID")
 	private Long userId;
 	private String userName;
