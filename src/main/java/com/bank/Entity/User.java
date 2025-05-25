@@ -13,27 +13,51 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "userDetails")
 public class User {
 
 	@Id
-	@GenericGenerator(name = "user_id_gen",strategy = "com.bank.CustomGenerator.UserCutomerGenerator")
-//	@GeneratedValue(generator = "user_id_gen")
-	@Column(name = "USER_ID")
-	private Long userId;
+    @GeneratedValue(generator = "user_id_gen")
+    @GenericGenerator(
+        name = "user_id_gen",
+        strategy = "com.bank.CustomGenerator.UserCustomerGenerator"
+    )
+    @Column(name = "user_id")
+    private String userId;
+	@NotBlank(message = "Username is required")
+	@Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
 	private String userName;
+	@Pattern(
+		    regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
+		    message = "Password must be at least 8 characters long and include uppercase, lowercase, and a number"
+		)
 	private String password;
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
 	private String email;
 	// optional for notifications
+	@Pattern(
+		    regexp = "^\\+\\d{1,3}\\d{8,14}$",
+		    message = "Phone number must include country code and be valid, e.g. +919876543210"
+		)
 	private String phoneNumber;
+	@NotNull(message = "User type is required")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
+	@Pattern(
+		    regexp = "ACTIVE|INACTIVE|BLOCKED",
+		    message = "Status must be one of: ACTIVE, INACTIVE, or BLOCKED"
+		)
 	private String status;
 	@CreationTimestamp
 	@Column(name = "CREATED_TIME", updatable = false)
@@ -42,11 +66,11 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Account> account;
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -114,7 +138,7 @@ public class User {
 		this.account = account;
 	}
 
-	public User(Long userId, String userName, String password, String email, String phoneNumber, UserRole role,
+	public User(String userId, String userName, String password, String email, String phoneNumber, UserRole role,
 			String status, LocalDateTime createdTime, List<Account> account) {
 		super();
 		this.userId = userId;

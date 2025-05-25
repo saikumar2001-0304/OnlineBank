@@ -26,9 +26,9 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private UserRepository userRepo;
 
-	public AccountDto create(AccountDto accountDto, Long userId) {
+	public AccountDto create(AccountDto accountDto, String userId) {
 		
-		User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+		User user = userRepo.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
 		Account account = DtoMapper.toAccount(accountDto);
 		account.setUser(user);

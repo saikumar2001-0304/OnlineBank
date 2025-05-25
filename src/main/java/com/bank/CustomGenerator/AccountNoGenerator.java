@@ -13,14 +13,14 @@ public class AccountNoGenerator implements IdentifierGenerator{
 	@Override
 	public Object generate(SharedSessionContractImplementor session, Object object) {
 		
-		String prefix="100000";
+		String prefix="PS100000";
 		String suffix="";
 		
 		try {
 			JdbcConnectionAccess access = session.getJdbcConnectionAccess();
 			Connection connection = access.obtainConnection();
 			Statement statement = connection.createStatement();
-			String sql="select nextval('account_Number_seq')";
+			String sql="select nextval('account_number_seq')";
 			ResultSet resultSet = statement.executeQuery(sql);
 			if(resultSet.next()) {
 				int seqval = resultSet.getInt(3);

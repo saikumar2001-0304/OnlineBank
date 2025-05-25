@@ -20,7 +20,7 @@ public class UserCustomerGenerator implements IdentifierGenerator{
 			JdbcConnectionAccess access = session.getJdbcConnectionAccess();
 			Connection connection = access.obtainConnection();
 			Statement statement = connection.createStatement();
-			String sql="select nextval('user_Id_seq')";
+			String sql="select nextval('user_id_seq')";
 			ResultSet resultSet = statement.executeQuery(sql);
 			if(resultSet.next()) {
 				int seqval = resultSet.getInt(1);

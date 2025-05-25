@@ -13,8 +13,8 @@ public interface UserService {
 	UserDto createUser(UserDto request,UserRole role);
 
 	User addUser(User user)throws UserException;
-	User userbyId(Long userId)throws UserException ;
+	User userbyId(String userId)throws UserException ;
 	List<User> getLsit();
-	String deleteuser(Long userId)throws UserException;
+	String deleteuser(String userId)throws UserException;
 	User updateUser(User user, String email) throws UserException;
 }

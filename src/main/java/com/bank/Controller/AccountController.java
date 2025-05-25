@@ -30,7 +30,7 @@ public class AccountController {
 	private AccountServiceImpl accService;
 	
 	@PostMapping("/create/{userId}")
-	public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto,@PathVariable Long userId ) {
+	public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto,@PathVariable String userId ) {
 		
 		return new ResponseEntity<>(accService.create(accountDto,userId),HttpStatus.CREATED);
 	}

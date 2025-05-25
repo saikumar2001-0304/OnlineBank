@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
 import com.bank.enums.AccountType;
 
@@ -14,18 +13,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 @Entity
 public class Account {
@@ -36,14 +32,19 @@ public class Account {
 	
 	@ManyToOne
 	private User user;
-//	@Pattern(regexp = "regexp = \"^[1-9]\\\\d{8,17}$\", message = \"Account number must be 9 to 18 digits and not start with 0\"")
-	@Column(unique=true)
-	@GenericGenerator(name = "account_number_gen",strategy = "com.bank.CustomGenerator.AccountNoGenerator")
-//	@GeneratedValue(generator = "account_number_gen")
+	@Pattern(
+		    regexp = "^ACC\\d{9}$",
+		    message = "Account number must start with 'ACC' followed by exactly 9 digits"
+		)
 	private String accountNumber;
+	@NotNull(message = "Balance is required")
+	@DecimalMin(value = "0.00", inclusive = true, message = "Balance must be non-negative")
 	private BigDecimal balance;
+	@NotNull(message = "Account type is required")
 	@Enumerated(EnumType.STRING)
 	private AccountType acType;
+	@NotBlank(message = "Status is required")
+	@Pattern(regexp = "ACTIVE|INACTIVE|BLOCKED", message = "Status must be ACTIVE, INACTIVE, or BLOCKED")
 	private String status;
 	@CreationTimestamp
 	@Column(name = "CREATED_TIME", updatable = false)

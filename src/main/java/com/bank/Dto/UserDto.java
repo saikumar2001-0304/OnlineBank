@@ -7,7 +7,7 @@ import jakarta.persistence.Enumerated;
 
 public class UserDto {
 
-	private Long userId;
+	private String userId;
 	private String userName;
 	private String password;
 	private String email;
@@ -21,7 +21,7 @@ public class UserDto {
 
 	
 
-	public UserDto(Long userId, String userName, String password, String email, String phoneNumber, UserRole role,
+	public UserDto(String userId, String userName, String password, String email, String phoneNumber, UserRole role,
 			String status) {
 		super();
 		this.userId = userId;
@@ -35,11 +35,11 @@ public class UserDto {
 
 
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

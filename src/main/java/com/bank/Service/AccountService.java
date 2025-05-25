@@ -10,7 +10,7 @@ import com.bank.enums.AccountType;
 
 public interface AccountService {
 	
-	AccountDto create(AccountDto accountDto,Long userId);
+	AccountDto create(AccountDto accountDto,String userId);
 
 	Account saveAccount(Account account,AccountType type)throws AccountExce;
 	List<Account> getAllAccounts();

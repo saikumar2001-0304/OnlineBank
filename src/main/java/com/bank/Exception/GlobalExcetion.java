@@ -1,13 +1,18 @@
 package com.bank.Exception;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 
 @RestControllerAdvice
@@ -34,5 +39,13 @@ public class GlobalExcetion {
 		);
 		
 		return new ResponseEntity<>(errormap,HttpStatus.BAD_REQUEST);
+	}
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<?> handleValidationErrors(ConstraintViolationException ex) {
+	    List<String> errors = ex.getConstraintViolations()
+	                            .stream()
+	                            .map(ConstraintViolation::getMessage)
+	                            .collect(Collectors.toList());
+	    return ResponseEntity.badRequest().body(errors);
 	}
 }

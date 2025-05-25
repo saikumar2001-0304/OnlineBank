@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User userbyId(Long userId) throws UserException {
+	public User userbyId(String userId) throws UserException {
 		User userdetails = usrepo.findById(userId).get();
 		if (userdetails.getUserId() == userId) {
 			return userdetails;
@@ -77,9 +77,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deleteuser(Long userId) throws UserException {
+	public String deleteuser(String userId) throws UserException {
 		User user = usrepo.findById(userId).get();
-		if (user.getUserId() == userId) {
+		if (user.getUserId().equals(userId)) {
 			usrepo.deleteById(userId);
 			return "user deleted successfully";
 		} else {
