@@ -1,6 +1,5 @@
 package com.bank.Entity;
 
-//<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,30 +12,32 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-public class Account {
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_user_id", "ac_type"})
+    }
+)
+ public class Account {
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long accountId;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long accountId;
-	
+	private String accountNumber;
 	@ManyToOne
 	private User user;
-	@Pattern(
-		    regexp = "^ACC\\d{9}$",
-		    message = "Account number must start with 'ACC' followed by exactly 9 digits"
-		)
-	private String accountNumber;
+	
 	@NotNull(message = "Balance is required")
 	@DecimalMin(value = "0.00", inclusive = true, message = "Balance must be non-negative")
 	private BigDecimal balance;
@@ -55,13 +56,7 @@ public class Account {
 	@OneToMany(mappedBy="toAccount")
 	private List<Transaction> received;
 
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
+	
 
 	public User getUser() {
 		return user;
@@ -132,10 +127,10 @@ public class Account {
 		super();
 	}
 
-	public Account(Long accountId, User user, String accountNumber, BigDecimal balance, AccountType acType,
+	public Account( User user, String accountNumber, BigDecimal balance, AccountType acType,
 			String status, LocalDateTime createdTime, List<Transaction> sent, List<Transaction> received) {
 		super();
-		this.accountId = accountId;
+		
 		this.user = user;
 		this.accountNumber = accountNumber;
 		this.balance = balance;

@@ -10,7 +10,7 @@ import com.bank.enums.UserRole;
 
 public interface UserService {
 	
-	UserDto createUser(UserDto request,UserRole role);
+	UserDto createUser(UserDto request,UserRole role) throws UserException;
 
 	User addUser(User user)throws UserException;
 	User userbyId(String userId)throws UserException ;

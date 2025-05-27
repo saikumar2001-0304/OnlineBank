@@ -10,12 +10,12 @@ import com.bank.enums.AccountType;
 
 public interface AccountService {
 	
-	AccountDto create(AccountDto accountDto,String userId);
+	AccountDto create(AccountDto accountDto,String userId,AccountType type);
 
 	Account saveAccount(Account account,AccountType type)throws AccountExce;
 	List<Account> getAllAccounts();
-	Account getByAccountId(long accountId)throws AccountExce;
-	Account updateAccount()throws AccountExce;
-	String deleteAccount(long accountId)throws AccountExce;
+//	Account getByAccountId(long accountId)throws AccountExce;
+//	Account updateAccount()throws AccountExce;
+//	String deleteAccount(long accountId)throws AccountExce;
 	
 }

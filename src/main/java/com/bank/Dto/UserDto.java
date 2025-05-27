@@ -12,28 +12,26 @@ public class UserDto {
 	private String password;
 	private String email;
 	private String phoneNumber;
-	
+	private String pan;
+
 	private UserRole role;
 	private String status;
 
 	public UserDto() {
 	}
 
-	
-
-	public UserDto(String userId, String userName, String password, String email, String phoneNumber, UserRole role,
-			String status) {
+	public UserDto(String userId, String userName, String password, String email, String phoneNumber, String pan,
+			UserRole role, String status) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.pan = pan;
 		this.role = role;
 		this.status = status;
 	}
-
-
 
 	public String getUserId() {
 		return userId;
@@ -75,30 +73,28 @@ public class UserDto {
 		this.phoneNumber = phoneNumber;
 	}
 
-
-
 	public UserRole getRole() {
 		return role;
 	}
-
-
 
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
 
-
-
 	public String getStatus() {
 		return status;
 	}
 
-
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
+	public String getPan() {
+		return pan;
+	}
+
+	public void setPan(String pan) {
+		this.pan = pan;
+	}
 
 }

@@ -25,17 +25,20 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private DtoMapper mapper;
 
-	public AccountDto create(AccountDto accountDto, String userId) {
+	public AccountDto create(AccountDto accountDto, String userId, AccountType type) {
 		
 		User user = userRepo.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-		Account account = DtoMapper.toAccount(accountDto);
+		Account account = mapper.toAccount(accountDto,type);
 		account.setUser(user);
 		
 		acRepo.save(account);
 	
-		return DtoMapper.toAccountDto(account);
+		return mapper.toAccountDto(account);
 
 	}
 
@@ -57,30 +60,30 @@ public class AccountServiceImpl implements AccountService {
 		return all;
 	}
 
-	@Override
-	public Account getByAccountId(long accountId) throws AccountExce {
-		Account account = acRepo.findById(accountId).get();
-		if (account.getAccountId().equals(accountId)) {
-			return account;
-		} else {
-			throw new AccountExce("account id was not found");
-		}
-	}
-
-	@Override
-	public String deleteAccount(long accountId) throws AccountExce {
-		Account account = acRepo.findById(accountId).get();
-		if (account.getAccountId().equals(accountId)) {
-			return "Account deleted successfully";
-		} else {
-			throw new AccountExce("account id was not found");
-		}
-	}
-
-	@Override
-	public Account updateAccount() throws AccountExce {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Account getByAccountId(long accountId) throws AccountExce {
+//		Account account = acRepo.findById(accountId).get();
+//		if (account.getAccountId().equals(accountId)) {
+//			return account;
+//		} else {
+//			throw new AccountExce("account id was not found");
+//		}
+//	}
+//
+//	@Override
+//	public String deleteAccount(long accountId) throws AccountExce {
+//		Account account = acRepo.findById(accountId).get();
+//		if (account.getAccountId().equals(accountId)) {
+//			return "Account deleted successfully";
+//		} else {
+//			throw new AccountExce("account id was not found");
+//		}
+//	}
+//
+//	@Override
+//	public Account updateAccount() throws AccountExce {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

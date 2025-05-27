@@ -1,17 +1,18 @@
 package com.bank.Service;
 
-import java.math.BigDecimal;
-
+import com.bank.Dto.TranscationRequest;
+import com.bank.Dto.TransferRequest;
 import com.bank.Exception.AccountExce;
 
 public interface TranscationService {
-	
-	public void depositMoney(String accNum , BigDecimal money) throws AccountExce;
-	public void withdrawMoney(String accNum, BigDecimal money) throws AccountExce;
+
+	public TranscationRequest depositMoney(TranscationRequest deposit) throws AccountExce;
+
+	public TranscationRequest withdrawMoney(TranscationRequest deposit) throws AccountExce;
 
 	public void transcationHistory();
+
 	public void balanceInquiry();
-	void transfer(String fromAccountNumber, String toAccountNumber, BigDecimal amount, String description) throws AccountExce;
 
-
+	TransferRequest transfer(TransferRequest transfer) throws AccountExce;
 }

@@ -27,43 +27,33 @@ import jakarta.validation.constraints.Size;
 public class User {
 
 	@Id
-    @GeneratedValue(generator = "user_id_gen")
-    @GenericGenerator(
-        name = "user_id_gen",
-        strategy = "com.bank.CustomGenerator.UserCustomerGenerator"
-    )
-    @Column(name = "user_id")
-    private String userId;
+	private String userId;
 	@NotBlank(message = "Username is required")
 	@Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
 	private String userName;
-	@Pattern(
-		    regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$",
-		    message = "Password must be at least 8 characters long and include uppercase, lowercase, and a number"
-		)
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must be at least 8 characters long and include uppercase, lowercase, and a number")
 	private String password;
 	@NotBlank(message = "Email is required")
 	@Email(message = "Invalid email format")
+	@Column(unique = true)
 	private String email;
 	// optional for notifications
-	@Pattern(
-		    regexp = "^\\+\\d{1,3}\\d{8,14}$",
-		    message = "Phone number must include country code and be valid, e.g. +919876543210"
-		)
+	@Pattern(regexp = "^\\+\\d{1,3}\\d{8,14}$", message = "Phone number must include country code and be valid, e.g. +919876543210")
 	private String phoneNumber;
 	@NotNull(message = "User type is required")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
-	@Pattern(
-		    regexp = "ACTIVE|INACTIVE|BLOCKED",
-		    message = "Status must be one of: ACTIVE, INACTIVE, or BLOCKED"
-		)
+	@Pattern(regexp = "ACTIVE|INACTIVE|BLOCKED", message = "Status must be one of: ACTIVE, INACTIVE, or BLOCKED")
 	private String status;
 	@CreationTimestamp
 	@Column(name = "CREATED_TIME", updatable = false)
 	private LocalDateTime createdTime;
 
-	@OneToMany(mappedBy="user")
+	@Size(min = 10, max = 10, message = "pan number length must be 10 characters")
+	@Column(unique = true, length = 10, nullable = false)
+	private String pan;
+
+	@OneToMany(mappedBy = "user")
 	private List<Account> account;
 
 	public String getUserId() {
@@ -130,6 +120,14 @@ public class User {
 		this.createdTime = createdTime;
 	}
 
+	public String getPan() {
+		return pan;
+	}
+
+	public void setPan(String pan) {
+		this.pan = pan;
+	}
+
 	public List<Account> getAccount() {
 		return account;
 	}
@@ -138,8 +136,14 @@ public class User {
 		this.account = account;
 	}
 
-	public User(String userId, String userName, String password, String email, String phoneNumber, UserRole role,
-			String status, LocalDateTime createdTime, List<Account> account) {
+	public User(String userId,
+			@NotBlank(message = "Username is required") @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters") String userName,
+			@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Password must be at least 8 characters long and include uppercase, lowercase, and a number") String password,
+			@NotBlank(message = "Email is required") @Email(message = "Invalid email format") String email,
+			@Pattern(regexp = "^\\+\\d{1,3}\\d{8,14}$", message = "Phone number must include country code and be valid, e.g. +919876543210") String phoneNumber,
+			@NotNull(message = "User type is required") UserRole role,
+			@Pattern(regexp = "ACTIVE|INACTIVE|BLOCKED", message = "Status must be one of: ACTIVE, INACTIVE, or BLOCKED") String status,
+			LocalDateTime createdTime, String pan, List<Account> account) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -149,6 +153,7 @@ public class User {
 		this.role = role;
 		this.status = status;
 		this.createdTime = createdTime;
+		this.pan = pan;
 		this.account = account;
 	}
 

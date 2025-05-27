@@ -5,29 +5,37 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bank.Dto.DtoMapper;
 import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
+import com.bank.Exception.AccountExce;
 import com.bank.Exception.UserException;
 import com.bank.Repository.UserRepository;
 import com.bank.enums.UserRole;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository usrepo;
 	
-	
-	
-
-	public UserDto createUser(UserDto request, UserRole role) {
+	@Autowired
+	private DtoMapper mapper;
 	
 
-		User user = DtoMapper.toUser(request,role);
+
+	public UserDto createUser(UserDto request, UserRole role) throws UserException {
+	
+
+	   if( usrepo.existsBypan(request.getPan())) throw new UserException("user already exists");
+	   if(usrepo.existsByemail(request.getEmail())) throw new UserException("email already exists");
+	    
+		User user = mapper.toUser(request,role);
 		User savedUser = usrepo.save(user);
-		return DtoMapper.toUserDto(savedUser);
+		return mapper.toUserDto(savedUser);
 		
 		
 

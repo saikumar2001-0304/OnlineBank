@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Serializable> {
 	
 	public boolean existsByemail(String email);
+	public boolean existsBypan(String pan);
 	public User findByEmail(String email);
 	
 	Optional<User> findByUserId(String userId);

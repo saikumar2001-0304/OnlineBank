@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
+import com.bank.Exception.AccountExce;
 import com.bank.Exception.UserException;
 import com.bank.Service.UserServiceImpl;
 import com.bank.enums.UserRole;
@@ -29,7 +30,7 @@ public class UserController {
 	
 	
 	@PostMapping("create")
-	public ResponseEntity<UserDto> createUser(UserRole role,UserDto request){
+	public ResponseEntity<UserDto> createUser(UserRole role,UserDto request) throws UserException{
 		
 		return new ResponseEntity<>(service.createUser(request, role),HttpStatus.CREATED);
 		
