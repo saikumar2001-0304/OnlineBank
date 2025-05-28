@@ -1,5 +1,9 @@
 package com.bank.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import com.bank.Dto.TranscationDto;
 import com.bank.Dto.TranscationRequest;
 import com.bank.Dto.TransferRequest;
 import com.bank.Exception.AccountExce;
@@ -10,9 +14,11 @@ public interface TranscationService {
 
 	public TranscationRequest withdrawMoney(TranscationRequest deposit) throws AccountExce;
 
-	public void transcationHistory();
+	public List<TranscationDto> transcationHistory(String accNo) throws AccountExce;
 
-	public void balanceInquiry();
 
 	TransferRequest transfer(TransferRequest transfer) throws AccountExce;
-}
+
+	BigDecimal balanceInquiry(String accNO) throws AccountExce;
+
+	}

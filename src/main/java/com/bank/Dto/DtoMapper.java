@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.bank.CustomGenerator.IdGeneratorService;
 import com.bank.Entity.Account;
+import com.bank.Entity.Transaction;
 import com.bank.Entity.User;
 import com.bank.enums.AccountType;
 import com.bank.enums.UserRole;
@@ -64,6 +65,24 @@ public class DtoMapper {
 		accountDto.setBalance(account.getBalance());
 		accountDto.setStatus(account.getStatus());
 		return accountDto;
+		
+	}
+	
+	
+	public TranscationDto toTranscationDto(Transaction transcation) {
+		
+		TranscationDto transcationDto = new TranscationDto();
+		
+		transcationDto.setId(transcation.getId());
+		transcationDto.setTimestamp(transcation.getTimestamp());
+		transcationDto.setAmount(transcation.getAmount());
+		transcationDto.setType(transcation.getType());
+		transcationDto.setFromAccountNumber(transcation.getFromAccount()!= null ? transcation.getFromAccount().getAccountNumber():null);
+		transcationDto.setToAccountNumber(transcation.getToAccount()!= null ? transcation.getToAccount().getAccountNumber():null);
+		transcationDto.setDescription(transcation.getDescription());
+		
+		return transcationDto;
+		
 		
 	}
 

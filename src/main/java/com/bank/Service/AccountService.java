@@ -14,8 +14,10 @@ public interface AccountService {
 
 	Account saveAccount(Account account,AccountType type)throws AccountExce;
 	List<Account> getAllAccounts();
-//	Account getByAccountId(long accountId)throws AccountExce;
+	
 //	Account updateAccount()throws AccountExce;
 //	String deleteAccount(long accountId)throws AccountExce;
+
+	AccountDto getByAccountId(String accNo) throws AccountExce;
 	
 }

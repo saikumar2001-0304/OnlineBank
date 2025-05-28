@@ -3,6 +3,7 @@ package com.bank.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,16 +30,11 @@ public class AccountController {
 		return new ResponseEntity<>(accService.create(accountDto, userId,type ), HttpStatus.CREATED);
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<Account> addAccount(@RequestBody Account account, AccountType type) throws AccountExce {
-		Account account2 = accService.saveAccount(account, type);
-		return new ResponseEntity<>(account2, HttpStatus.CREATED);
+	
+	@GetMapping("/get/{id}")
+	public ResponseEntity<AccountDto> getbyId(@PathVariable(name="id") String AccountNo) throws AccountExce{
+		return new ResponseEntity<>(accService.getByAccountId(AccountNo),HttpStatus.OK);
 	}
-//	@GetMapping("/get/{id}")
-//	public ResponseEntity<Account> getbyId(@PathVariable(name="id") Long AccountId) throws AccountExce{
-//		Account byAccountId = accService.getByAccountId(AccountId);
-//		return new ResponseEntity<>(byAccountId,HttpStatus.OK);
-//	}
 //	@GetMapping("/list")
 //	public ResponseEntity<List<Account>>getList(){
 //		List<Account> allAccounts = accService.getAllAccounts();
