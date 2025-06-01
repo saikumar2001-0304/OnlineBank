@@ -16,7 +16,7 @@ import com.bank.Repository.UserRepository;
 import com.bank.enums.UserRole;
 
 @Service
-@Transactional
+
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	private DtoMapper mapper;
 	
 
-
+	@Transactional
 	public UserDto createUser(UserDto request, UserRole role) throws UserException {
 	
 
@@ -41,16 +41,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	@Override
-	public User addUser(User user) throws UserException {
-		if (usrepo.existsByemail(user.getEmail())) {
-			throw new UserException("user email already exist");
-		} else {
-			User userdetails = usrepo.save(user);
-			return userdetails;
-		}
-
-	}
 
 	@Override
 	public User userbyId(String userId) throws UserException {
@@ -70,7 +60,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUser(User user, String email) throws UserException {
-
+		// email
+		//phn
+		//password
 		User byEmail = usrepo.findByEmail(email);
 		if (byEmail.getEmail() == email) {
 

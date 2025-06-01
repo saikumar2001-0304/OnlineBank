@@ -15,6 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Serializable> 
 
 	public boolean existsByAccountNumber(String accountNumber);
 	Optional<Account> findByAccountNumber(String accountNumber);
+	void deleteByAccountNumber(String accountNumber);
 	
      
 }

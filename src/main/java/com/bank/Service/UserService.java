@@ -12,7 +12,6 @@ public interface UserService {
 	
 	UserDto createUser(UserDto request,UserRole role) throws UserException;
 
-	User addUser(User user)throws UserException;
 	User userbyId(String userId)throws UserException ;
 	List<User> getLsit();
 	String deleteuser(String userId)throws UserException;

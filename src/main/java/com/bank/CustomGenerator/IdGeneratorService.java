@@ -11,7 +11,12 @@ public class IdGeneratorService {
 	
 	 @PersistenceContext
 	    private  EntityManager entityManager;
-
+	 	
+		/* run this script on db for first time
+		 * CREATE SEQUENCE user_id START WITH 1 INCREMENT BY 1; CREATE SEQUENCE
+		 * account_number START WITH 1 INCREMENT BY 1;
+		 */
+	 
 	    @Transactional
 	    public  String generateUserId() {
 	        Long seq = ((Number) entityManager.createNativeQuery("SELECT nextval('user_id')").getSingleResult()).longValue();

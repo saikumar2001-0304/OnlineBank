@@ -20,6 +20,8 @@ import com.bank.Repository.TranscationRepository;
 import com.bank.Repository.UserRepository;
 import com.bank.enums.AccountType;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -35,9 +37,12 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private DtoMapper mapper;
 
-	public AccountDto create(AccountDto accountDto, String userId, AccountType type) {
+	@Transactional
+	public AccountDto create(AccountDto accountDto, String userId, AccountType type) throws AccountExce{
 		
-		User user = userRepo.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
+		// check once
+		
+		User user = userRepo.findByUserId(userId).orElseThrow(() -> new AccountExce("User not found"));
 
 		Account account = mapper.toAccount(accountDto,type);
 		account.setUser(user);
@@ -56,17 +61,7 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
-	@Override
-	public Account saveAccount(Account account, AccountType type) throws AccountExce {
-
-		if (acRepo.existsByAccountNumber(account.getAccountNumber())) {
-			throw new AccountExce("account number already existed");
-		} else {
-			account.setAcType(type);
-			Account save = acRepo.save(account);
-			return save;
-		}
-	}
+	
 
 	@Override
 	public List<Account> getAllAccounts() {
@@ -78,23 +73,30 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto getByAccountId(String accNo) throws AccountExce {
 	
 		DtoMapper mapper = new DtoMapper();
-		return mapper.toAccountDto(acRepo.findByAccountNumber(accNo).orElseThrow(()-> new AccountExce("Account not found")))     ;
+		return mapper.toAccountDto(acRepo.findByAccountNumber(accNo).orElseThrow(()-> new AccountExce("Account not found")));
 	}
-//
-//	@Override
-//	public String deleteAccount(long accountId) throws AccountExce {
-//		Account account = acRepo.findById(accountId).get();
-//		if (account.getAccountId().equals(accountId)) {
-//			return "Account deleted successfully";
-//		} else {
-//			throw new AccountExce("account id was not found");
-//		}
-//	}
-//
-//	@Override
-//	public Account updateAccount() throws AccountExce {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
+	@Override
+	public String deleteAccount(String accNo) throws AccountExce {
+		
+		DtoMapper mapper = new DtoMapper();
+		 AccountDto accountDto = mapper.toAccountDto(acRepo.findByAccountNumber(accNo).orElseThrow(()-> new AccountExce("Account not found")));
+		
+		if (accountDto.getAccountNumber().equals(accNo))
+		{
+			acRepo.deleteByAccountNumber(accNo);
+		}
+		return "account deleted number was"+accNo;
+	}
+
+	@Override
+	public String updateAccount(String accNo,AccountType type) throws AccountExce {
+		DtoMapper mapper = new DtoMapper();
+		 AccountDto accountDto = mapper.toAccountDto(acRepo.findByAccountNumber(accNo).orElseThrow(()-> new AccountExce("Account not found")));
+		 accountDto.setAccountType(type);
+		 AccountType accountType = accountDto.getAccountType();
+		 return "account type is updated to "+accountType;
+		
+	}
 
 }

@@ -29,7 +29,7 @@ public class UserController {
 	private UserServiceImpl service;
 	
 	
-	@PostMapping("create")
+	@PostMapping("/create")
 	public ResponseEntity<UserDto> createUser(UserRole role,UserDto request) throws UserException{
 		
 		return new ResponseEntity<>(service.createUser(request, role),HttpStatus.CREATED);
@@ -38,11 +38,6 @@ public class UserController {
 	
 	
 	
-	@PostMapping("/adduser")
-	public ResponseEntity<User> addUser(@RequestBody User user) throws UserException{
-		User user2 = service.addUser(user);
-		return new ResponseEntity<>(user2,HttpStatus.CREATED);
-	}
 	@GetMapping("/getuser/{id}")
 	public ResponseEntity<User> getuser(@PathVariable(name="id") String userId) throws UserException{
 		User userbyId = service.userbyId(userId);
