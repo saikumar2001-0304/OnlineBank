@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bank.Configuration.CustomUserDetails;
 import com.bank.Dto.DtoMapper;
 import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
@@ -20,10 +22,17 @@ import com.bank.enums.UserRole;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository usrepo;
+	private static UserRepository usrepo;
 	
 	@Autowired
 	private DtoMapper mapper;
+	
+
+    public  CustomUserDetails UserServiceImpl(String email) throws UserException {
+        User user = usrepo.findByEmail(email);
+        if (user == null) throw new UserException("User not found");
+        return new CustomUserDetails(user);
+    }
 	
 
 	@Transactional

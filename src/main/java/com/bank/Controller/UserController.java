@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.Configuration.AuthRequest;
+import com.bank.Configuration.JwtUtil;
 import com.bank.Dto.UserDto;
 import com.bank.Entity.User;
-import com.bank.Exception.AccountExce;
 import com.bank.Exception.UserException;
 import com.bank.Service.UserServiceImpl;
 import com.bank.enums.UserRole;
@@ -27,6 +31,23 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl service;
+	
+	 @Autowired 
+	 private AuthenticationManager authManager;
+	    @Autowired 
+	    private JwtUtil jwtUtil;
+
+	    @PostMapping("/login")
+	    public ResponseEntity<String> login(@RequestBody AuthRequest request) throws UserException {
+	        authManager.authenticate(new UsernamePasswordAuthenticationToken(
+	                request.getEmail(), request.getPassword()
+	        ));
+
+	        final UserDetails userDetails = service.UserServiceImpl(request.getEmail());
+	        final String token = jwtUtil.generateToken(userDetails.getUsername());
+
+	        return ResponseEntity.ok(token);
+	    }
 	
 	
 	@PostMapping("/create")
